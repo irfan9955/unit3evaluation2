@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather 2</title>
+    <style>
+        #flex {
+            display: flex;
+        }
+    </style>
+    <!-- <style>
+                    .mapouter {
+                        position: relative;
+                        text-align: right;
+                        height: 500px;
+                        width: 600px;
+                    }
+                </style> -->
+    <!-- <style>
+                    .gmap_canvas {
+                        overflow: hidden;
+                        background: none !important;
+                        height: 500px;
+                        width: 600px;
+                    } -->
+    <!-- </style> -->
+</head>
+
+<body>
+    <input type="text" name="" id="city" placeholder="Enter City Name">
+    <button onclick="start()">Submit</button>
+    <div id="flex">
+    <div id="appenddata"></div>
+    <!-- <div class="mapouter"> -->
+    <div class="gmap_canvas">
+        <iframe width="600" height="500" id="gmap_canvas" frameborder="0" scrolling="no" marginheight="0"
+            marginwidth="0">
+        </iframe>
+    </div>
+</div>
+    <!-- </div> -->
+    <!-- </div> -->
+
+
+
+</body>
+
+</html>
+<script>
+    async function start() {
+        var search = document.getElementById("city").value;
+
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=0564a401c304404074a37549c99b7a2f`
+
+        let res = await fetch(url)
+
+        let data = await res.json();
+
+
+        // console.log(data)
+        pasteinbody(data)
+    }
+    function pasteinbody(data) {
+        var paste = document.getElementById("appenddata");
+        paste.innerHTML = null;
+
+        if (data.message == "city not found") {
+            console.log("City NOt found")
+            paste.innerText = "City Not found"
+            paste.style.color = "red"
+            paste.append(paste)
+        }
+        console.log(data)
+
+        // data.foreach(function () {
+        let name = document.createElement("h2")
+        name.innerText = data.name;
+
+
+        let google = document.querySelector("iframe")
+        google.src=`https://maps.google.com/maps?q=${data.name}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+
+
+        let min = document.createElement("p")
+        min.innerText = `MIN TEMP : ${data.main.temp_min}`;
+        let max = document.createElement("p")
+        max.innerText = `MAX TEMP : ${data.main.temp_max}`;
+        // console.log(name,min,max)  
+        let wind = document.createElement("p")
+        wind.innerText = `Wind  :  deg = ${data.wind.deg}, speed = ${data.wind.speed}`;
+        let clouds = document.createElement("p")
+        clouds.innerText = `cloud :${data.clouds.all}`;
+        let sunrise = document.createElement("p")
+        sunrise.innerText = `Sun Rise : ${data.sys.sunrise}`;
+        let sunset = document.createElement("p")
+        sunset.innerText = `Sun Set : ${data.sys.sunset}`;
+        paste.append(name, min, max, wind, clouds, sunrise, sunset)
+
+        // })
+
+
+    }
+
+
+</script>

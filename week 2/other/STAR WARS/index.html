@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>star wars</title>
+    <style>
+        img{
+            width: 100%;
+        }
+        #display{
+            width: 100%;
+        }
+        body{
+            background-image: url('https://media.istockphoto.com/photos/hunting-rebels-picture-id544671790?k=20&m=544671790&s=612x612&w=0&h=OR_O6-Dh_NS6ndjYtHWF8rc_P0Qh4okpgG03NgioirI=') ;
+            background-attachment: fixed;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+
+
+            
+
+        }
+        input{
+            margin: auto;
+            display: block;
+            margin-top: 260px;
+            width: 500px;
+            padding-left: 30px;
+            background-color: rgb(5, 0, 0);
+            color: white;
+            height: 50px;
+            border-radius: 20px;
+        }
+        #appended{
+            background-color: white;
+            height: 350px;
+            width: 500px;
+            margin: auto;
+            overflow: scroll;
+        }
+        #appended>p{
+            color: rgb(17, 17, 1);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="display">
+        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdD4e9ywAFIUOYD9xt3oSQMG7bS78QJGWjYbTpF2em8z2z-cF5Ipd7tsHNHP8PcW6kztI&usqp=CAU" alt="">
+         -->
+        <input type="text" name="" id="input" oninput="debounce(takeinput(),1000)" placeholder="Search Character">
+        
+        <div id="appended"></div>
+    </div>
+    
+</body>
+</html>
+<script>
+    let x;
+    async function takeinput(){
+        var input = document.querySelector("#input").value
+
+        let url = `https://swapi.dev/api/people/?search=${input}`
+
+        let res = await fetch(url)
+
+        let data = await res.json();
+
+        // console.log(input)
+        
+        // console.log(data.results)
+        appended(data.results)
+    }
+
+    function appended(data){
+        
+        let res = document.getElementById("appended")
+         res.innerText=null
+            //   console.log(data[0].name)
+        data.forEach(function(el){
+            // console.log(el.name)
+            let p = document.createElement("p")
+            p.innerText=el.name
+            res.append(p)
+        })
+    }
+
+   function debounce(func , late){
+       if(x){
+           clearTimeout(x)
+       }
+      x = setTimeout(function(){
+           func;
+       },late)
+   }
+</script>

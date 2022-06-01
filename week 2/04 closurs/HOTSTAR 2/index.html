@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOTSTAR 2</title>
+    <style>
+        #query{
+            height: 30px;
+            width: 60%;
+            margin: auto;
+            margin-top: 30px;
+            display: block;
+            padding-left: 30px;
+            
+        }
+        #searchres{
+            height: 300px;
+            width: 65%;
+            margin: auto;
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <input type="text" name="" id="query" oninput="searchmovie()" placeholder="Search Movie">
+    <div id="searchres"></div>
+    <div dir="result"></div>
+    
+</body>
+</html>
+<script>
+    async function searchmovie(){
+        var search = document.querySelector("query").vlaue;
+
+        let url=`http://www.omdbapi.com/?apikey=fe08ee96&s=${search}`
+
+        let res = await fetch(url)
+
+        let data = await res.json();
+
+        console.log(data)
+    }
+</script>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotstar 1</title>
+    <style>
+        input {
+            width: 50%;
+            /* text-align: center; */
+            display: block;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        #container {
+            width: 51%;
+            height: 400px;
+            overflow: scroll;
+            /* margin-top: 20px; */
+            margin: auto;
+            /* border: 10xp solid red; */
+            /* background-color: black; */
+
+        }
+
+        #contianer>div {
+            /* display: ; */
+            /* width: 100%; */
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="search" placeholder="Search Movie" oninput="debouncea(takeinput,1000)">
+    <div id="container"></div>
+    <!-- debounce(takeinput,1000) -->
+
+</body>
+
+</html>
+<script>
+    let x;
+    async function takeinput() {
+        var search = document.querySelector("#search").value;
+        //  console.log(search)
+        let url = `http://www.omdbapi.com/?apikey=fe08ee96&s=${search}`
+        let res = await fetch(url)
+        let result = await res.json();
+        if (result.Search === undefined) {
+            console.log("sorry")
+        }
+        else {
+            // console.log(result.Search)
+            appenddata(result.Search)
+            // return result.Search;
+        }
+
+
+        //  .then(function (result) {
+        //     return result.json()
+        //     //   .then(function(resutl){
+        //     //      console.log("res : ",result)
+        //     //  })
+        // })
+        //     .then(function (result) {
+        //         //  result.json()
+        //         //  console.log("res : ",result.Search)
+        //         if (result.Search === undefined) {
+        //             console.log("sorry")
+        //         }
+        //         else {
+        //             // console.log(result.Search)
+        //             appenddata(result.Search)
+        //         }
+
+        //         //  appenddata(result.Search)
+        //     })
+        //     .catch(function (error) {
+        //         console.log("Irfan error : ", error)
+        //     })
+        //  console.log(url)
+    }
+ 
+        function appenddata(data) {
+            let x = document.getElementById("container").value
+            x = container.innerText = null;
+
+            data.forEach(function (element) {
+
+                // var div=document.querySelector("#containger")
+                let h2 = document.createElement("p")
+                h2.innerText = element.Title;
+                container.append(h2)
+                console.log(h2)
+
+            })
+
+        }
+
+
+        function debounce(func, late) {
+            if (x) {
+                clearTimeout(x)
+            }
+            x = setTimeout(function () {
+                func();
+            }, late)
+        }
+
+    
+</script>
